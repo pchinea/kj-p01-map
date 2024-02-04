@@ -27,3 +27,7 @@ async def get_city(repo: CitiesAbstractRepository, city_id: UUID4) -> City:
     if not city:
         raise CityDoesNotExistException(city_id=city_id)
     return city
+
+
+async def list_cities(repo: CitiesAbstractRepository) -> list[tuple[UUID4, str]]:
+    return await repo.get_city_names()
