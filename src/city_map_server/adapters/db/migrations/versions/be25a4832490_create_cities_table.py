@@ -23,8 +23,8 @@ def upgrade() -> None:
     op.create_table('cities',
     sa.Column('country', sa.String(), nullable=False),
     sa.Column('name', sa.String(), nullable=False),
-    sa.Column('lat', sa.String(), nullable=False),
-    sa.Column('lng', sa.String(), nullable=False),
+    sa.Column('latitude', sa.String(), nullable=False),
+    sa.Column('longitude', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('name')
     )
     # ### end Alembic commands ###

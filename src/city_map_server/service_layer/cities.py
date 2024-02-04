@@ -9,10 +9,10 @@ async def create_city(
         repo: CitiesAbstractRepository,
         name: str,
         country: str,
-        lat: str,
-        lng: str
+        latitude: str,
+        longitude: str
 ) -> City:
-    new_city = City(name=name, country=country, lat=lat, lng=lng)
+    new_city = City(name=name, country=country, latitude=latitude, longitude=longitude)
     try:
         city = await repo.add_city(new_city)
     except IntegrityError:
