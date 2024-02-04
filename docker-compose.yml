@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  postgres:
+    container_name: postgres_cities
+    image: postgres
+    environment:
+      - POSTGRES_USER=dbuser
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=city_map
+
+  cities:
+    container_name: cities
+    image: cities
+    build: .
+    environment:
+      - DB_HOST=postgres_cities
+    ports:
+      - "0.0.0.0:8000:8000"
