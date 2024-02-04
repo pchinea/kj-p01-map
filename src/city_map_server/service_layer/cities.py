@@ -9,8 +9,8 @@ async def create_city(
         repo: CitiesAbstractRepository,
         name: str,
         country: str,
-        latitude: str,
-        longitude: str
+        latitude: float,
+        longitude: float
 ) -> City:
     new_city = City(name=name, country=country, latitude=latitude, longitude=longitude)
     try:

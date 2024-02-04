@@ -1,8 +1,8 @@
 """create cities table
 
-Revision ID: be25a4832490
+Revision ID: e80efac97e10
 Revises: 
-Create Date: 2024-02-03 18:06:20.173033
+Create Date: 2024-02-04 06:45:04.489029
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'be25a4832490'
+revision: str = 'e80efac97e10'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -23,8 +23,8 @@ def upgrade() -> None:
     op.create_table('cities',
     sa.Column('country', sa.String(), nullable=False),
     sa.Column('name', sa.String(), nullable=False),
-    sa.Column('latitude', sa.String(), nullable=False),
-    sa.Column('longitude', sa.String(), nullable=False),
+    sa.Column('latitude', sa.Float(), nullable=False),
+    sa.Column('longitude', sa.Float(), nullable=False),
     sa.PrimaryKeyConstraint('name')
     )
     # ### end Alembic commands ###

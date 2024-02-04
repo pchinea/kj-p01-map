@@ -8,5 +8,5 @@ class City(Base):
 
     country: Mapped[str]
     name: Mapped[str] = mapped_column(primary_key=True)
-    latitude: Mapped[str]
-    longitude: Mapped[str]
+    latitude: Mapped[float]
+    longitude: Mapped[float]
