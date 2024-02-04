@@ -1,4 +1,5 @@
 import abc
+import uuid
 
 from city_map_server.adapters.db.session import SessionManager
 from city_map_server.domain.cities import City
@@ -12,7 +13,7 @@ class CitiesAbstractRepository(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    async def get_city(self, name: str):
+    async def get_city(self, city_id: uuid.UUID):
         pass
 
 
@@ -24,9 +25,9 @@ class CitiesSqlAlchemyRepository(CitiesAbstractRepository):
                 session.add(db_city)
         return City.model_validate(db_city)
 
-    async def get_city(self, name: str) -> City | None:
+    async def get_city(self, city_id: uuid.UUID) -> City | None:
         async with SessionManager() as session:
             async with session.begin():
-                db_city = await session.get(DB_City, name=name)
+                db_city = await session.get(DB_City, city_id)
         if db_city:
             return City.model_validate(db_city)

@@ -1,3 +1,5 @@
+from pydantic import UUID4
+
 from city_map_server.service_layer.exceptions import CityAlreadyExistsException, CityDoesNotExistException
 from sqlalchemy.exc import IntegrityError
 
@@ -17,4 +19,11 @@ async def create_city(
         city = await repo.add_city(new_city)
     except IntegrityError:
         raise CityAlreadyExistsException(name=name)
+    return city
+
+
+async def get_city(repo: CitiesAbstractRepository, city_id: UUID4) -> City:
+    city = await repo.get_city(city_id)
+    if not city:
+        raise CityDoesNotExistException(city_id=city_id)
     return city
