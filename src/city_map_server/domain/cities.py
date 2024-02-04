@@ -3,10 +3,13 @@ import uuid
 from pydantic import BaseModel, ConfigDict, Field
 
 
-class City(BaseModel):
+class CityBase(BaseModel):
     city_id: uuid.UUID = Field(default_factory=uuid.uuid4)
-    country: str
     name: str
+
+
+class City(CityBase):
+    country: str
     latitude: float
     longitude: float
 

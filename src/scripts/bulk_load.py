@@ -1,7 +1,6 @@
 import asyncio
 import json
 import os
-import sys
 
 from city_map_server.adapters.respositories.cities import CitiesSqlAlchemyRepository
 from city_map_server.domain.cities import City

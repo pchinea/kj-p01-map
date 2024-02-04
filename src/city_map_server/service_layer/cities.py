@@ -4,7 +4,7 @@ from city_map_server.service_layer.exceptions import CityAlreadyExistsException,
 from sqlalchemy.exc import IntegrityError
 
 from city_map_server.adapters.respositories.cities import CitiesAbstractRepository
-from city_map_server.domain.cities import City
+from city_map_server.domain.cities import City, CityBase
 
 
 async def create_city(
@@ -29,8 +29,8 @@ async def get_city(repo: CitiesAbstractRepository, city_id: UUID4) -> City:
     return city
 
 
-async def list_cities(repo: CitiesAbstractRepository) -> list[tuple[UUID4, str]]:
-    return await repo.get_city_names()
+async def list_cities(repo: CitiesAbstractRepository, offset: int, limit: int) -> list[CityBase]:
+    return await repo.get_city_names(offset=offset, limit=limit)
 
 
 async def bulk_insert_cities(repo: CitiesAbstractRepository, cities: list[City]) -> None:

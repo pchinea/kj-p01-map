@@ -19,7 +19,7 @@ class CitiesAbstractRepository(metaclass=abc.ABCMeta):
         pass
 
     @abc.abstractmethod
-    async def get_city_names(self):
+    async def get_city_names(self, offset: int, limit: int):
         pass
 
     @abc.abstractmethod
@@ -46,10 +46,10 @@ class CitiesSqlAlchemyRepository(CitiesAbstractRepository):
         if db_city:
             return City.model_validate(db_city)
 
-    async def get_city_names(self) -> list[tuple[uuid.UUID, str]]:
+    async def get_city_names(self, offset: int, limit: int) -> list[tuple[uuid.UUID, str]]:
         async with SessionManager() as session:
             async with session.begin():
-                query = select(DB_City).with_only_columns(DB_City.city_id, DB_City.name)
+                query = select(DB_City).with_only_columns(DB_City.city_id, DB_City.name).offset(offset).limit(limit)
                 result = await session.execute(query)
         return result.fetchall()
 
