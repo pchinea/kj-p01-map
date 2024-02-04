@@ -1,7 +1,7 @@
 import abc
 import uuid
 
-from sqlalchemy import select
+from sqlalchemy import select, insert, func
 
 from city_map_server.adapters.db.session import SessionManager
 from city_map_server.domain.cities import City
@@ -20,6 +20,14 @@ class CitiesAbstractRepository(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     async def get_city_names(self):
+        pass
+
+    @abc.abstractmethod
+    async def bulk_insert_city(self, cities: list[City]):
+        pass
+
+    @abc.abstractmethod
+    async def is_empty(self) -> bool:
         pass
 
 
@@ -44,4 +52,16 @@ class CitiesSqlAlchemyRepository(CitiesAbstractRepository):
                 query = select(DB_City).with_only_columns(DB_City.city_id, DB_City.name)
                 result = await session.execute(query)
         return result.fetchall()
+
+    async def bulk_insert_city(self, cities: list[City]) -> None:
+        async with SessionManager() as session:
+            async with session.begin():
+                await session.execute(insert(DB_City), cities)
+
+    async def is_empty(self) -> bool:
+        async with SessionManager() as session:
+            async with session.begin():
+                query = select(func.count("*")).select_from(DB_City)
+                result = await session.execute(query)
+        return not result.fetchone()[0]
 

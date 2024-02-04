@@ -31,3 +31,11 @@ async def get_city(repo: CitiesAbstractRepository, city_id: UUID4) -> City:
 
 async def list_cities(repo: CitiesAbstractRepository) -> list[tuple[UUID4, str]]:
     return await repo.get_city_names()
+
+
+async def bulk_insert_cities(repo: CitiesAbstractRepository, cities: list[City]) -> None:
+    await repo.bulk_insert_city(cities)
+
+
+async def is_emtpy(repo: CitiesAbstractRepository) -> bool:
+    return await repo.is_empty()
